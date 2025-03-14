@@ -30,13 +30,61 @@ body {
   margin: 0;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.stats-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: Arial, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+
+.stats-table__row {
+  cursor: pointer;
+}
+
+
+.stats-table__cell {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.stats-table__cell_header {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.stats-table__cell_current-day {
+  background-color: #40e0d0;
+}
+
+.stats-table__cell_positive {
+  background-color: #d4f8d4;
+}
+
+.stats-table__cell_negative {
+  background-color: #f8d4d4;
+}
+
+.stats-table__cell_zero {
+  background-color: #eeeeee;
+}
+
+.stats-table__cell_diff {
+  margin-left: 4px;
+  font-weight: bold;
+}
+
+.stats-table__row_chart .stats-table__cell {
+  padding: 16px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.stats-table__cell_current-day.stats-table__cell_positive {
+  background-color: #d4f8d4;
+}
+.stats-table__cell_current-day.stats-table__cell_negative {
+  background-color: #f8d4d4;
+}
+.stats-table__cell_current-day.stats-table__cell_zero {
+  background-color: #eeeeee;
 }

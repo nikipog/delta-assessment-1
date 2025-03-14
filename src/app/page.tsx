@@ -1,95 +1,72 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import { useState } from 'react';
+import TableRow from './components/table-row/table-tow';
+import RowNames from './const';
 
-export default function Home() {
+
+export default function TablePage() {
+  const [isChartOpen, setIsChartOpen] = useState(false);
+
+  const todayValue = 500521;
+  const yesterdayValue = 480521
+  const theseWeekDay = 4805821
+
+
+  const chartOptions = {
+    title: {
+      text: `${RowNames.Revenue}`,
+    },
+    xAxis: {
+      categories: ['Вчера', 'Сегодня', 'День этой недели'],
+    },
+    series: [
+      {
+        name: `${RowNames.Revenue}`,
+        data: [todayValue, yesterdayValue, theseWeekDay],
+      },
+    ],
+  };
+
+  const handleRowClick = () => {
+    setIsChartOpen((prev) => !prev);
+  };
+
+
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="stats-table-wrapper">
+      <table className="stats-table">
+        <thead className="stats-table__head">
+          <tr className="stats-table__row">
+            <th className="stats-table__cell stats-table__cell_header">Показатель</th>
+            <th className="stats-table__cell stats-table__cell_header stats-table__cell_current-day">
+              Текущий день
+            </th>
+            <th className="stats-table__cell stats-table__cell_header">Вчера</th>
+            <th className="stats-table__cell stats-table__cell_header">Этот день недели</th>
+          </tr>
+        </thead>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+        <tbody className="stats-table__body">
+          <TableRow
+          todayValue={todayValue}
+          yesterdayValue={yesterdayValue}
+          theseWeekDay={theseWeekDay}
+          rowName={RowNames.Revenue}
+          handleRowClick={handleRowClick}
           />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+          {isChartOpen && (
+            <tr className="stats-table__row stats-table__row_chart">
+              <td className="stats-table__cell" colSpan={4}>
+                <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 }
